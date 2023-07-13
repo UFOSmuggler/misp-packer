@@ -5,8 +5,8 @@ Welcome to the MISP Threat Sharing VM.
 
 IP address: \4{enp0s3}
 
-The default host credentials are: \e{red}misp / Password1234
-The default MISP credentials are: admin@admin.test / admin\e{reset}
+The default host credentials are: \e{red}misp / Password1234\e{reset}
+The default MISP credentials are: \e{red}admin@admin.test / admin\e{reset}
 
 \e{bold}If this guest is using VirtualBox, it is using VirtualBox NAT networking 
 and thus the host can only communicate with the guest via the below port
