@@ -4,16 +4,20 @@
     {
       "boot_command": [
         "{{ user `boot_command_prefix` }}",
-        "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
-        "<enter>"
+        " autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+        "<F10>"
       ],
       "disk_size": "{{ user `disk_size` }}",
       "export_opts": [
         "--manifest",
-        "--vsys", "0",
-        "--eulafile", "/tmp/LICENSE-misp",
-        "--description", "{{ user `vm_description` }}",
-        "--version", "{{ user `vm_version` }}"
+        "--vsys",
+        "0",
+        "--eulafile",
+        "/tmp/LICENSE-misp",
+        "--description",
+        "{{ user `vm_description` }}",
+        "--version",
+        "{{ user `vm_version` }}"
       ],
       "format": "ova",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
@@ -23,8 +27,7 @@
       "http_directory": "http",
       "http_port_max": 9011,
       "http_port_min": 9001,
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum_type` }}:{{ user `iso_checksum` }}",
       "iso_urls": [
         "{{ user `iso_path` }}/{{ user `iso_name` }}",
         "{{ user `iso_url` }}"
@@ -36,20 +39,90 @@
       "ssh_username": "{{ user `ssh_user` }}",
       "type": "virtualbox-iso",
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}" ],
-        [ "modifyvm", "{{.Name}}", "--natpf1", "ssh,tcp,,2222,0.0.0.0,22" ],
-        [ "modifyvm", "{{.Name}}", "--natpf1", "http,tcp,,8080,,80" ],
-        [ "modifyvm", "{{.Name}}", "--natpf1", "https,tcp,,8443,,443" ],
-        [ "modifyvm", "{{.Name}}", "--natpf1", "dashboard,tcp,,8001,0.0.0.0,8001" ],
-        [ "modifyvm", "{{.Name}}", "--natpf1", "viper,tcp,,8888,0.0.0.0,8888" ],
-        [ "modifyvm", "{{.Name}}", "--natpf1", "jupyter-notebook,tcp,,8889,0.0.0.0,8889" ],
-        [ "modifyvm", "{{.Name}}", "--natpf1", "misp-modules,tcp,,1666,0.0.0.0,6666" ],
-        [ "modifyvm", "{{.Name}}", "--audio", "none" ],
-        [ "modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga" ],
-        [ "modifyvm", "{{.Name}}", "--usb", "off" ],
-        [ "modifyvm", "{{.Name}}", "--vrde", "off" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}" ],
-        [ "modifyvm", "{{.Name}}", "--vram", "32" ]
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "{{user `memory`}}"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "ssh,tcp,,2222,0.0.0.0,22"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "http,tcp,,8080,,80"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "https,tcp,,8443,,443"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "dashboard,tcp,,8001,0.0.0.0,8001"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "viper,tcp,,8888,0.0.0.0,8888"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "jupyter-notebook,tcp,,8889,0.0.0.0,8889"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "misp-modules,tcp,,1666,0.0.0.0,6666"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--audio",
+          "none"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--graphicscontroller",
+          "vmsvga"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--usb",
+          "off"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vrde",
+          "off"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "{{user `cpus`}}"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vram",
+          "32"
+        ]
       ],
       "vm_name": "{{user `vm_name`}}"
     },
@@ -57,29 +130,28 @@
       "boot_command": [
         "{{ user `boot_command_prefix` }}",
         "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
-        "<enter>"
+        "<F10>"
       ],
       "boot_wait": "5s",
       "disk_size": "{{ user `disk_size` }}",
       "guest_os_type": "ubuntu-64",
       "headless": "{{ user `headless` }}",
       "http_directory": "http",
-      "http_port_min": 9001,
       "http_port_max": 9011,
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "http_port_min": 9001,
+      "iso_checksum": "{{ user `iso_checksum_type` }}:{{ user `iso_checksum` }}",
       "iso_urls": [
         "{{ user `iso_path` }}/{{ user `iso_name` }}",
         "{{ user `iso_url` }}"
       ],
       "memory": "{{ user `memory` }}",
       "shutdown_command": "echo {{user `ssh_pass`}} |sudo -S shutdown -P now",
-      "skip_compaction":  false,
+      "skip_compaction": false,
+      "ssh_handshake_attempts": "90",
+      "ssh_password": "{{user `ssh_pass`}}",
       "ssh_pty": "true",
       "ssh_timeout": "30m",
-      "ssh_handshake_attempts": "90",
       "ssh_username": "{{user `ssh_user`}}",
-      "ssh_password": "{{user `ssh_pass`}}",
       "type": "vmware-iso",
       "vm_name": "{{ user `vm_name` }}"
     }
@@ -95,7 +167,9 @@
       ],
       "execute_command": "echo '{{user `ssh_pass`}}' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
       "inline": [
-        "echo '%sudo    ALL=(ALL)  NOPASSWD:ALL' >> /etc/sudoers"
+        "echo '%sudo    ALL=(ALL)  NOPASSWD:ALL' >> /etc/sudoers",
+	"echo '$nrconf{kernelhints} = -1;' >> /etc/needrestart/needrestart.conf",
+	"echo '$nrconf{restart} = '\\''l'\\'';' >> /etc/needrestart/needrestart.conf"
       ],
       "type": "shell"
     },
@@ -147,7 +221,7 @@
     }
   ],
   "variables": {
-    "boot_command_prefix": "<enter><enter><f6><esc><wait> ",
+    "boot_command_prefix": "e<down><down><down><end><left><left><left><left>",
     "cpus": "1",
     "desktop": "false",
     "disk_size": "25000",
@@ -155,20 +229,21 @@
     "hostname": "misp",
     "http_proxy": "{{env `http_proxy`}}",
     "https_proxy": "{{env `https_proxy`}}",
-    "iso_checksum": "302c990c6d69575ff24c96566e5c7e26bf36908abb0cd546e22687c46fb07bf8dba595bf77a9d4fd9ab63e75c0437c133f35462fd41ea77f6f616140cd0e5e6a",
+    "iso_checksum": "d0d701e284748502532438808477e81c36fdedbdebd8af59aaaeb84a0e59fc381bd3861df58aa6dda50dbe8f04aa9db6229ca404c83437ab1002ba48a315c0f2",
     "iso_checksum_type": "sha512",
-    "iso_name": "ubuntu-20.04.1-live-server-amd64.iso",
+    "iso_name": "ubuntu-22.04.2-live-server-amd64.iso",
     "iso_path": "iso",
-    "iso_url": "https://releases.ubuntu.com/20.04/ubuntu-20.04.1-live-server-amd64.iso",
+    "iso_url": "https://releases.ubuntu.com/22.04/ubuntu-22.04.2-live-server-amd64.iso",
     "memory": "3072",
     "no_proxy": "{{env `no_proxy`}}",
     "ovftool_path": "ovftool",
     "ssh_fullname": "MISP User",
-    "ssh_user": "misp",
     "ssh_pass": "Password1234",
+    "ssh_user": "misp",
     "update": "true",
     "vm_description": "MISP, is an open source software solution for collecting, storing, distributing and sharing cyber security indicators and threat about cyber security incidents analysis and malware analysis. MISP is designed by and for incident analysts, security and ICT professionals or malware reverser to support their day-to-day operations to share structured informations efficiently.",
     "vm_name": "MISP_demo",
     "vm_version": "2.4"
   }
 }
+
